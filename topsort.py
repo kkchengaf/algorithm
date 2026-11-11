@@ -1,17 +1,20 @@
 
 
-indeg = [0]*n
-res = []
+from collections import deque
 
-q = deque([i for i in range(n) if indeg[i] == 0])
-while q:
-    node = q.popleft()
-    res.append(node)
-    for neigh in adj[node]:
-        indeg[neigh] -= 1
-        if indeg[neigh] == 0:
-            q.append(neigh)
+def topsort(adj, n):
+    indeg = [0]*n
+    res = []
 
-if len(res) < n:
-    return []
-return res[::-1]
+    q = deque([i for i in range(n) if indeg[i] == 0])
+    while q:
+        node = q.popleft()
+        res.append(node)
+        for neigh in adj[node]:
+            indeg[neigh] -= 1
+            if indeg[neigh] == 0:
+                q.append(neigh)
+                
+    if len(res) < n:
+        return []
+    return res[::-1]
